@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Production Data for Welding & Molding - August</title>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      --bg-card: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --border-color: #cbd5e1;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+      
+      --accent-blue: #2563eb;
+      --accent-blue-hover: #1d4ed8;
+      --table-header-bg: #f1f5f9;
+      --table-row-hover: #f8fafc;
+      --table-border: #e2e8f0;
+      
+      --status-green: #10b981;
+      --status-blue: #3b82f6;
+      --status-red: #ef4444;
+    }
+
+    [data-theme="dark"] {
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+      --bg-card: #1e293b;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #64748b;
+      --border-color: #334155;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+      
+      --accent-blue: #3b82f6;
+      --accent-blue-hover: #60a5fa;
+      --table-header-bg: #0f172a;
+      --table-row-hover: #334155;
+      --table-border: #334155;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    /* Top Navigation Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      background: var(--bg-card);
+      padding: 16px 24px;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .header-title-zone {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-title-zone h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .badge-month {
+      background: rgba(37, 99, 235, 0.1);
+      color: var(--accent-blue);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 1px solid rgba(37, 99, 235, 0.2);
+    }
+
+    .controls-zone {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* Segmented Button Control */
+    .process-toggle {
+      display: flex;
+      background: var(--table-header-bg);
+      border: 1px solid var(--border-color);
+      padding: 4px;
+      border-radius: 12px;
+    }
+
+    .process-btn {
+      padding: 8px 20px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .process-btn.active {
+      background-color: var(--accent-blue);
+      color: #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .theme-toggle-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 8px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      font-size: 0.85rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .theme-toggle-btn:hover {
+      background: var(--table-header-bg);
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(200px, 1fr)) minmax(220px, 1.2fr);
+      grid-template-rows: repeat(2, 1fr);
+      grid-template-areas:
+        "a b c d"
+        "e f g d";
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-grid .kpi-card:nth-child(1) { grid-area: a; }
+    .kpi-grid .kpi-card:nth-child(2) { grid-area: b; }
+    .kpi-grid .kpi-card:nth-child(3) { grid-area: c; }
+    .kpi-grid .kpi-card:nth-child(4) { grid-area: d; }
+    .kpi-grid .kpi-card:nth-child(5) { grid-area: e; }
+    .kpi-grid .kpi-card:nth-child(6) { grid-area: f; }
+    .kpi-grid .kpi-card:nth-child(7) { grid-area: g; }
+
+    @media (max-width: 900px) {
+      .kpi-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        grid-template-rows: none;
+        grid-template-areas: none;
+      }
+      .kpi-grid .kpi-card:nth-child(1),
+      .kpi-grid .kpi-card:nth-child(2),
+      .kpi-grid .kpi-card:nth-child(3),
+      .kpi-grid .kpi-card:nth-child(4),
+      .kpi-grid .kpi-card:nth-child(5),
+      .kpi-grid .kpi-card:nth-child(6),
+      .kpi-grid .kpi-card:nth-child(7) {
+        grid-area: auto;
+      }
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--accent-blue);
+    }
+
+    .kpi-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .kpi-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .kpi-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .kpi-icon-wrapper {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(37, 99, 235, 0.1);
+      color: var(--accent-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Featured (larger) KPI card - used for Overall OEE% */
+    .kpi-card.kpi-featured {
+      padding: 28px 32px;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(16, 185, 129, 0.08));
+      border: 1px solid rgba(37, 99, 235, 0.25);
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .kpi-card.kpi-featured::before {
+      width: 6px;
+      background: linear-gradient(180deg, var(--accent-blue), #10b981);
+    }
+
+    .kpi-card.kpi-featured .kpi-title {
+      font-size: 0.95rem;
+    }
+
+    .kpi-card.kpi-featured .kpi-value {
+      font-size: 3.2rem;
+    }
+
+    .kpi-card.kpi-featured .kpi-icon-wrapper {
+      width: 68px;
+      height: 68px;
+      background: rgba(37, 99, 235, 0.15);
+    }
+
+    .kpi-card.kpi-featured .kpi-icon-wrapper i {
+      width: 32px;
+      height: 32px;
+    }
+
+    @media (max-width: 640px) {
+      .kpi-card.kpi-featured {
+        grid-column: span 1;
+      }
+      .kpi-card.kpi-featured .kpi-value {
+        font-size: 2.4rem;
+      }
+    }
+
+    /* Dashboard Layout Panels */
+    .view-panel {
+      display: none;
+      flex-direction: column;
+      gap: 24px;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .view-panel.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Chart Cards & Layout */
+    .charts-row-welding {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    .charts-row-molding {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+
+
+    .chart-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chart-card.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .chart-header h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chart-container-lg {
+      position: relative;
+      height: 380px;
+      width: 100%;
+    }
+
+    .chart-container-md {
+      position: relative;
+      height: 320px;
+      width: 100%;
+    }
+
+    /* Data Table Card */
+    .table-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      max-height: 520px;
+      overflow-y: auto;
+      border-radius: 8px;
+      border: 1px solid var(--table-border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.825rem;
+      text-align: right;
+    }
+
+    th, td {
+      padding: 10px 14px;
+      white-space: nowrap;
+    }
+
+    th {
+      background-color: var(--table-header-bg);
+      color: var(--text-secondary);
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 2px solid var(--table-border);
+    }
+
+    th:first-child, td:first-child {
+      text-align: left;
+      position: sticky;
+      left: 0;
+      background-color: var(--bg-card);
+      z-index: 5;
+    }
+
+    th:first-child {
+      background-color: var(--table-header-bg);
+      z-index: 15;
+    }
+
+    td {
+      border-bottom: 1px solid var(--table-border);
+      color: var(--text-primary);
+    }
+
+    tbody tr:hover td {
+      background-color: var(--table-row-hover);
+    }
+
+    tfoot tr td {
+      background-color: var(--table-header-bg);
+      font-weight: 700;
+      border-top: 2px solid var(--table-border);
+      position: sticky;
+      bottom: 0;
+      z-index: 8;
+    }
+
+    /* Metric Badges for Table OEE */
+    .oee-badge {
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    .oee-high { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+    .oee-mid { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+    .oee-low { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+
+    /* Legend Indicator Box */
+    .color-legend {
+      display: flex;
+      gap: 16px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-box {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 1200px) {
+      .charts-row-welding {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body data-theme="light">
+
+  <div class="container">
+    <header class="header">
+      <div class="header-title-zone">
+        <img src="data:image/jpeg;base64,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X8I2LoXgakUFKoL2ymIcS5ZoP8QhLG7mMdGZvNHkiRJwZqKoIliCqWtcc9K6gB28WuCOqEkIiA7VKpQU5pZnum3BAu7WuOUNNcNNC1AQoO9NIOkG7bi/lCkXsT5RTIwkFTve4Jitr52AsroI00b0JKAKiHOOwRUITdQXAA8a+UNCSwaWM1FVZl148in0ASLG7PcMBNINfOwFk4xTlX+LJ6CRiiXyVo1zkPkFUYasY5JNTW5Km81N4/wZlWFwCnG/NmAcv+n/AMinN4rBMK9T16fQrUBY1gBYBOx/zZJvbuhDB1IAHhSE4IbD17aHtMpJdYd3qDoUGEQCGo5BV/xhBYQp2AU3mpvH+0lmidiS4GnZQbhNYYgDYjjsD4E/AtwATn3QeUDBLNACFYEHRVAF9qh8bouMTrYqbA5p5QZS3gBJIanZV1ISOo5SbzU3j/aazT3igc2jYIlNAv3UNNY/KL/uIe6AJg5bAK3VI4T4fquXm81N4/2ms1F49BvhkQ5x7GbyhWvYIjl78hNAThH2tQjtuBkQhmgljU0dH8XRYmCPYuq5ebzU3j/YWMCBHHB0MyRYNwwBbrXOnXLZodwjEX2Hg+4i297xjYE32r7akkuZcmpRCe0FqBxuqwzx6k2PYFN5qbx+RN5qbx+RN5qbx+RN5qbx+RN5qbx+RN5qbx+RN5oAaEk6C3dSPlSPlSPlSPlSPlSPlSPlSPlSPlSPlSPlSPlSPlSPlSPlSPlSPlSPlSPlSPlSPlSPlSPlADQgHSX7r//aAAwDAQACAAMAAAAQc88888888888M888888888888888888888888888888888888888uQx74szyyz7q8mE7l60/P/RDp8dO++7+NXq79w888888884ME4I88888888k8UIo8888888888888888888888888888888888888888c88888888888A//EACURAQABBAICAgEFAAAAAAAAAAERACExcUFRgZEQYbFQYKHR8P/aAAgBAwEBPxD9Uw7BXxSKyxicjz/uypOBGZQie6SbJgSS67pFAIzKEboIUSIvZljJUODaLIk8ZoGQWBQXxTQIXtOM+qgBH0j+KlQdJJ9ZrGVcTq0efgCJfH0f2x6av74KAiRF4eCGkO9wTwxndXwDdZQNWLUQRtRKCYM8YnPNMGMD66eIpqkZJl+3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" alt="Amphenol FCi" style="height: 36px; width: auto; border-radius: 4px;">
+        <i data-lucide="factory" style="width: 28px; height: 28px; color: var(--accent-blue);"></i>
+        <h1>Production Data Dashboard</h1>
+        <span class="badge-month">August</span>
+      </div>
+
+      <div class="controls-zone">
+        <div class="process-toggle">
+          <button class="process-btn active" id="btn-welding" onclick="switchView('welding')">
+            <i data-lucide="zap" style="width: 16px; height: 16px;"></i> Welding
+          </button>
+          <button class="process-btn" id="btn-molding" onclick="switchView('molding')">
+            <i data-lucide="box" style="width: 16px; height: 16px;"></i> Molding
+          </button>
+        </div>
+
+        <button class="theme-toggle-btn" onclick="toggleTheme()">
+          <i data-lucide="moon" id="theme-icon" style="width: 16px; height: 16px;"></i>
+          <span id="theme-text">Dark Mode</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-info">
+          <span class="kpi-title">Good Products</span>
+          <span class="kpi-value" id="kpi-good">0</span>
+        </div>
+        <div class="kpi-icon-wrapper"><i data-lucide="check-circle-2"></i></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-info">
+          <span class="kpi-title">Production Hours</span>
+          <span class="kpi-value" id="kpi-hrs">0</span>
+        </div>
+        <div class="kpi-icon-wrapper"><i data-lucide="clock"></i></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-info">
+          <span class="kpi-title">Active Lines</span>
+          <span class="kpi-value" id="kpi-lines">0</span>
+        </div>
+        <div class="kpi-icon-wrapper"><i data-lucide="activity"></i></div>
+      </div>
+
+      <div class="kpi-card kpi-featured">
+        <div class="kpi-info">
+          <span class="kpi-title">Overall OEE %</span>
+          <span class="kpi-value" id="kpi-oee">0%</span>
+        </div>
+        <div class="kpi-icon-wrapper"><i data-lucide="gauge"></i></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-info">
+          <span class="kpi-title">Availability %</span>
+          <span class="kpi-value" id="kpi-avail">0%</span>
+        </div>
+        <div class="kpi-icon-wrapper"><i data-lucide="power"></i></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-info">
+          <span class="kpi-title">Performance %</span>
+          <span class="kpi-value" id="kpi-perf">0%</span>
+        </div>
+        <div class="kpi-icon-wrapper"><i data-lucide="zap"></i></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-info">
+          <span class="kpi-title">Quality %</span>
+          <span class="kpi-value" id="kpi-qual">0%</span>
+        </div>
+        <div class="kpi-icon-wrapper"><i data-lucide="badge-check"></i></div>
+      </div>
+    </section>
+
+    <div id="welding-panel" class="view-panel active">
+      <div class="chart-card full-width">
+        <div class="chart-header">
+          <h2><i data-lucide="bar-chart-3" style="color: var(--accent-blue);"></i> Welding - OEE % by Machine</h2>
+          <div class="color-legend">
+            <div class="legend-item"><div class="legend-box" style="background: #10b981;"></div> &gt; 70%</div>
+            <div class="legend-item"><div class="legend-box" style="background: #3b82f6;"></div> 50% - 70%</div>
+            <div class="legend-item"><div class="legend-box" style="background: #ef4444;"></div> &lt; 50%</div>
+          </div>
+        </div>
+        <div class="chart-container-lg">
+          <canvas id="weldingOeeChart"></canvas>
+        </div>
+      </div>
+
+      <div class="charts-row-welding">
+        <div class="chart-card" style="grid-column: span 2;">
+          <div class="chart-header">
+            <h2><i data-lucide="alert-triangle" style="color: #f59e0b;"></i> Production Loss Pareto Chart (Hours)</h2>
+          </div>
+          <div class="chart-container-md">
+            <canvas id="weldingParetoChart"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <h2><i data-lucide="pie-chart" style="color: #8b5cf6;"></i> Machine Breakdown Reasons</h2>
+          </div>
+          <div class="chart-container-md">
+            <canvas id="weldingPieChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="chart-header">
+          <h2><i data-lucide="table" style="color: var(--accent-blue);"></i> Welding Machines Performance Register</h2>
+        </div>
+        <div class="table-wrapper">
+          <table id="weldingTable">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Total Theor. Hrs</th>
+                <th>Shift Open Hrs</th>
+                <th>Good Qty</th>
+                <th>Total Qty</th>
+                <th>Availability %</th>
+                <th>Performance %</th>
+                <th>Quality %</th>
+                <th>OEE %</th>
+                <th>Break Down (hrs)</th>
+                <th>Material Shortage (hrs)</th>
+                <th>People Unavailable (hrs)</th>
+                <th>No Order (hrs)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="molding-panel" class="view-panel">
+      <div class="chart-card full-width">
+        <div class="chart-header">
+          <h2><i data-lucide="bar-chart-3" style="color: var(--accent-blue);"></i> Molding - OEE % by Machine</h2>
+          <div class="color-legend">
+            <div class="legend-item"><div class="legend-box" style="background: #10b981;"></div> &gt; 70%</div>
+            <div class="legend-item"><div class="legend-box" style="background: #3b82f6;"></div> 50% - 70%</div>
+            <div class="legend-item"><div class="legend-box" style="background: #ef4444;"></div> &lt; 50%</div>
+          </div>
+        </div>
+        <div class="chart-container-lg">
+          <canvas id="moldingOeeChart"></canvas>
+        </div>
+      </div>
+
+      <div class="charts-row-molding">
+        <div class="chart-card full-width">
+          <div class="chart-header">
+            <h2><i data-lucide="alert-triangle" style="color: #f59e0b;"></i> Production Loss Pareto Chart (Hours)</h2>
+          </div>
+          <div class="chart-container-lg">
+            <canvas id="moldingParetoChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="chart-header">
+          <h2><i data-lucide="table" style="color: var(--accent-blue);"></i> Molding Machines Performance Register</h2>
+        </div>
+        <div class="table-wrapper">
+          <table id="moldingTable">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Total Theor. Hrs</th>
+                <th>Shift Open Hrs</th>
+                <th>Good Qty</th>
+                <th>Total Qty</th>
+                <th>Availability %</th>
+                <th>Performance %</th>
+                <th>Quality %</th>
+                <th>OEE %</th>
+                <th>Machine Breakdown</th>
+                <th>Material Shortage</th>
+                <th>People Unavailable</th>
+                <th>No Order</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Register ChartDataLabels plugin globally
+    Chart.register(ChartDataLabels);
+
+    // Dynamic Theme Helper
+    function isDarkMode() {
+      return document.body.getAttribute('data-theme') === 'dark';
+    }
+
+    function getThemeTextColor() {
+      return isDarkMode() ? '#f8fafc' : '#0f172a';
+    }
+
+    function getThemeGridColor() {
+      return isDarkMode() ? '#334155' : '#e2e8f0';
+    }
+
+    // Dynamic Color Condition for OEE Bar Charts
+    function getOeeBarColor(value) {
+      if (value > 70) return '#10b981'; // Green above 70
+      if (value >= 50) return '#3b82f6'; // Blue above 50
+      return '#ef4444'; // Red below 50
+    }
+
+    // --- RAW DATA SETS ---
+    const rawWeldingTable = [
+      { id: "US 01", theor: 109.897, shift: 176.416, good: 27222, total: 27342, avail: "70%", perf: "62%", qual: "100%", oee: 43, bd: 9.25, mat: 33.916, ppl: 4.5, noOrder: 37.166 },
+      { id: "US 02", theor: 239.301, shift: 321.25, good: 76959, total: 77312, avail: "85%", perf: "74%", qual: "100%", oee: 63, bd: 21.75, mat: 22.75, ppl: 9.666, noOrder: 24.333 },
+      { id: "US 03", theor: 249.170, shift: 320.833, good: 65629, total: 66088, avail: "79%", perf: "78%", qual: "99%", oee: 61, bd: 51.166, mat: 39.916, ppl: 8.833, noOrder: 36.416 },
+      { id: "US 05", theor: 210.257, shift: 355.000, good: 50595, total: 51495, avail: "85%", perf: "59%", qual: "98%", oee: 49, bd: 16.666, mat: 50.833, ppl: 3.166, noOrder: 11.000 },
+      { id: "US 07", theor: 204.891, shift: 306.583, good: 50554, total: 50818, avail: "76%", perf: "67%", qual: "99%", oee: 50, bd: 20.833, mat: 70.583, ppl: 2.833, noOrder: 26.000 },
+      { id: "US 08", theor: 182.330, shift: 260.416, good: 46885, total: 47004, avail: "73%", perf: "70%", qual: "100%", oee: 51, bd: 8.000, mat: 71.583, ppl: 17.250, noOrder: 7.750 },
+      { id: "US 09", theor: 193.235, shift: 284.000, good: 50760, total: 50912, avail: "75%", perf: "68%", qual: "100%", oee: 51, bd: 26.583, mat: 61.833, ppl: 2.916, noOrder: 29.250 },
+      { id: "US 10", theor: 363.207, shift: 413.750, good: 111221, total: 111533, avail: "90%", perf: "88%", qual: "100%", oee: 78, bd: 21.250, mat: 4.916, ppl: 4.250, noOrder: 39.083 },
+      { id: "US 11", theor: 126.755, shift: 159.916, good: 56184, total: 56299, avail: "88%", perf: "79%", qual: "100%", oee: 70, bd: 8.750, mat: 11.000, ppl: 1.916, noOrder: 9.166 },
+      { id: "US 12", theor: 172.843, shift: 285.000, good: 43880, total: 43930, avail: "87%", perf: "61%", qual: "100%", oee: 52, bd: 12.833, mat: 34.333, ppl: 4.416, noOrder: 5.250 },
+      { id: "US 13", theor: 371.726, shift: 415.666, good: 104312, total: 104717, avail: "84%", perf: "89%", qual: "100%", oee: 75, bd: 23.833, mat: 33.833, ppl: 10.000, noOrder: 37.500 },
+      { id: "US 14", theor: 239.773, shift: 318.000, good: 100626, total: 100831, avail: "84%", perf: "75%", qual: "100%", oee: 63, bd: 15.333, mat: 24.000, ppl: 11.500, noOrder: 24.500 },
+      { id: "US 15", theor: 225.516, shift: 309.750, good: 38660, total: 38755, avail: "90%", perf: "73%", qual: "100%", oee: 65, bd: 81.000, mat: 14.250, ppl: 12.500, noOrder: 6.500 },
+      { id: "US 16", theor: 225.870, shift: 293.750, good: 37503, total: 37596, avail: "91%", perf: "77%", qual: "100%", oee: 70, bd: 28.500, mat: 21.000, ppl: 1.500, noOrder: 5.750 },
+      { id: "US 17", theor: 292.397, shift: 362.666, good: 48821, total: 48919, avail: "93%", perf: "81%", qual: "100%", oee: 74, bd: 14.916, mat: 22.500, ppl: 5.333, noOrder: 1.500 },
+      { id: "US 18", theor: 212.560, shift: 286.666, good: 81831, total: 82018, avail: "91%", perf: "74%", qual: "100%", oee: 67, bd: 11.750, mat: 10.500, ppl: 4.000, noOrder: 13.833 },
+      { id: "US 19", theor: 145.004, shift: 151.416, good: 23728, total: 23762, avail: "90%", perf: "96%", qual: "100%", oee: 86, bd: 0.500, mat: 7.166, ppl: 2.166, noOrder: 7.250 },
+      { id: "US 20", theor: 250.525, shift: 367.041, good: 86236, total: 86276, avail: "86%", perf: "65%", qual: "100%", oee: 56, bd: 19.000, mat: 36.704, ppl: 12.000, noOrder: 12.250 },
+      { id: "US 21", theor: 181.236, shift: 217.333, good: 70267, total: 71987, avail: "80%", perf: "83%", qual: "98%", oee: 65, bd: 11.333, mat: 29.583, ppl: 0.500, noOrder: 25.583 },
+      { id: "US 22", theor: 320.263, shift: 310.416, good: 66151, total: 66158, avail: "79%", perf: "100%", qual: "100%", oee: 78, bd: 27.916, mat: 21.333, ppl: 16.416, noOrder: 8.833 },
+      { id: "US 23", theor: 232.970, shift: 325.250, good: 57997, total: 58107, avail: "80%", perf: "72%", qual: "100%", oee: 57, bd: 16.333, mat: 54.916, ppl: 7.250, noOrder: 18.583 },
+      { id: "US 24", theor: 208.259, shift: 195.888, good: 39058, total: 39058, avail: "90%", perf: "105%", qual: "100%", oee: 95, bd: 2.166, mat: 13.833, ppl: 2.750, noOrder: 4.750 },
+      { id: "US 25", theor: 443.915, shift: 399.500, good: 77064, total: 77208, avail: "84%", perf: "111%", qual: "100%", oee: 93, bd: 5.333, mat: 63.500, ppl: 1.500, noOrder: 11.500 },
+      { id: "US 26", theor: 527.770, shift: 572.416, good: 90475, total: 90612, avail: "96%", perf: "92%", qual: "100%", oee: 89, bd: 61.416, mat: 13.416, ppl: 4.500, noOrder: 4.666 },
+      { id: "Automatic 27", theor: 117.760, shift: 143.000, good: 121156, total: 121186, avail: "93%", perf: "82%", qual: "100%", oee: 76, bd: 40.416, mat: 0.500, ppl: 0, noOrder: 0 },
+      { id: "US 28", theor: 468.235, shift: 540.333, good: 80209, total: 80384, avail: "95%", perf: "87%", qual: "100%", oee: 82, bd: 70.083, mat: 17.000, ppl: 5.166, noOrder: 3.833 },
+      { id: "US 29", theor: 424.900, shift: 515.166, good: 72840, total: 72840, avail: "93%", perf: "82%", qual: "100%", oee: 77, bd: 88.500, mat: 32.083, ppl: 3.750, noOrder: 2.000 },
+      { id: "US 30", theor: 385.182, shift: 442.166, good: 85317, total: 85315, avail: "89%", perf: "87%", qual: "100%", oee: 78, bd: 52.166, mat: 47.416, ppl: 6.416, noOrder: 1.000 },
+      { id: "US 32", theor: 79.339, shift: 266.666, good: 10309, total: 10420, avail: "78%", perf: "30%", qual: "99%", oee: 23, bd: 43.750, mat: 52.333, ppl: 8.500, noOrder: 15.500 },
+      { id: "US 34", theor: 417.001, shift: 407.416, good: 107229, total: 107603, avail: "85%", perf: "102%", qual: "100%", oee: 87, bd: 35.583, mat: 41.005, ppl: 4.659, noOrder: 23.666 },
+      { id: "US 35", theor: 398.233, shift: 441.500, good: 92910, total: 92942, avail: "85%", perf: "90%", qual: "100%", oee: 77, bd: 72.166, mat: 42.250, ppl: 10.166, noOrder: 24.083 },
+      { id: "US 36", theor: 108.785, shift: 164.666, good: 36059, total: 36157, avail: "84%", perf: "66%", qual: "100%", oee: 55, bd: 5.250, mat: 13.166, ppl: 0.833, noOrder: 17.333 },
+      { id: "US 37", theor: 244.267, shift: 452.583, good: 42348, total: 42878, avail: "91%", perf: "54%", qual: "99%", oee: 49, bd: 79.250, mat: 21.000, ppl: 9.583, noOrder: 13.833 },
+      { id: "US 38", theor: 114.903, shift: 241.250, good: 19346, total: 19437, avail: "86%", perf: "48%", qual: "100%", oee: 41, bd: 17.500, mat: 18.000, ppl: 5.500, noOrder: 16.250 },
+      { id: "US 39", theor: 114.730, shift: 275.416, good: 19668, total: 19745, avail: "89%", perf: "42%", qual: "100%", oee: 37, bd: 48.583, mat: 10.000, ppl: 2.000, noOrder: 20.583 },
+      { id: "US 40", theor: 93.520, shift: 247.416, good: 16314, total: 16370, avail: "86%", perf: "38%", qual: "100%", oee: 32, bd: 39.833, mat: 12.333, ppl: 6.666, noOrder: 20.583 },
+      { id: "US 41", theor: 75.081, shift: 513.000, good: 72461, total: 72570, avail: "95%", perf: "82%", qual: "100%", oee: 78, bd: 33.250, mat: 8.100, ppl: 1.583, noOrder: 4.000 },
+      { id: "US 42", theor: 422.689, shift: 513.000, good: 72461, total: 72570, avail: "95%", perf: "82%", qual: "100%", oee: 78, bd: 82.250, mat: 20.666, ppl: 0.333, noOrder: 5.000 },
+      { id: "US 43", theor: 115.158, shift: 238.000, good: 19092, total: 19470, avail: "89%", perf: "48%", qual: "100%", oee: 43, bd: 31.916, mat: 15.916, ppl: 7.166, noOrder: 4.916 }
+    ];
+
+    const rawMoldingTable = [
+      { id: "TKC 2", theor: 165.016, shift: 227.916, good: 9901, total: 10231, avail: "66%", perf: "72%", qual: "97%", oee: 47, bd: 805, mat: 4445, ppl: 1290, noOrder: 1170 },
+      { id: "TKC 3", theor: 225.760, shift: 232.416, good: 16298, total: 16378, avail: "65%", perf: "100%", qual: "100%", oee: 64, bd: 260, mat: 7315, ppl: 565, noOrder: 1775 },
+      { id: "TKC 4", theor: 245.480, shift: 264.666, good: 12840, total: 13413, avail: "60%", perf: "92%", qual: "96%", oee: 53, bd: 530, mat: 7250, ppl: 1560, noOrder: 2230 },
+      { id: "TKC 5", theor: 55.480, shift: 63.666, good: 9547, total: 9655, avail: "64%", perf: "82%", qual: "99%", oee: 52, bd: 90, mat: 3865, ppl: 1520, noOrder: 1065 },
+      { id: "TKC 7", theor: 206.830, shift: 373.666, good: 8784, total: 8788, avail: "81%", perf: "55%", qual: "100%", oee: 45, bd: 70, mat: 4590, ppl: 0, noOrder: 710 },
+      { id: "TKC 8", theor: 265.360, shift: 269.500, good: 15974, total: 15984, avail: "80%", perf: "102%", qual: "100%", oee: 81, bd: 100, mat: 4860, ppl: 30, noOrder: 505 },
+      { id: "TKC 9", theor: 368.100, shift: 335.000, good: 16884, total: 16893, avail: "76%", perf: "110%", qual: "100%", oee: 83, bd: 165, mat: 4900, ppl: 150, noOrder: 1310 },
+      { id: "TKC 10", theor: 204.720, shift: 278.500, good: 6461, total: 6560, avail: "65%", perf: "74%", qual: "98%", oee: 47, bd: 105, mat: 7030, ppl: 540, noOrder: 1460 },
+      { id: "TKC 11", theor: 197.270, shift: 381.416, good: 8907, total: 8945, avail: "78%", perf: "52%", qual: "100%", oee: 40, bd: 50, mat: 5860, ppl: 30, noOrder: 625 },
+      { id: "TKC 12", theor: 469.600, shift: 405.333, good: 28351, total: 28952, avail: "83%", perf: "116%", qual: "98%", oee: 94, bd: 375, mat: 3045, ppl: 655, noOrder: 1390 },
+      { id: "TKC 13", theor: 47.560, shift: 48.750, good: 3498, total: 4196, avail: "58%", perf: "98%", qual: "83%", oee: 47, bd: 265, mat: 1655, ppl: 30, noOrder: 430 },
+      { id: "TKC 14", theor: 521.720, shift: 384.000, good: 32101, total: 32234, avail: "74%", perf: "136%", qual: "100%", oee: 100, bd: 260, mat: 4980, ppl: 285, noOrder: 2775 },
+      { id: "YIZUMI", theor: 185.770, shift: 248.333, good: 5715, total: 5751, avail: "60%", perf: "75%", qual: "99%", oee: 45, bd: 90, mat: 4095, ppl: 750, noOrder: 0 },
+      { id: "TKC 20", theor: 148.880, shift: 141.666, good: 8971, total: 8989, avail: "75%", perf: "105%", qual: "100%", oee: 79, bd: 0, mat: 1720, ppl: 195, noOrder: 925 },
+      { id: "TKC 17", theor: 287.150, shift: 313.333, good: 24425, total: 24474, avail: "72%", perf: "91%", qual: "100%", oee: 65, bd: 0, mat: 6775, ppl: 445, noOrder: 1330 },
+      { id: "TKC 18", theor: 99.960, shift: 138.083, good: 5230, total: 5536, avail: "62%", perf: "72%", qual: "94%", oee: 42, bd: 560, mat: 3625, ppl: 265, noOrder: 1265 },
+      { id: "TKC 23", theor: 246.980, shift: 268.583, good: 19327, total: 19770, avail: "82%", perf: "90%", qual: "98%", oee: 72, bd: 880, mat: 3360, ppl: 265, noOrder: 1065 },
+      { id: "TKC 21", theor: 285.850, shift: 259.083, good: 23122, total: 23529, avail: "74%", perf: "110%", qual: "98%", oee: 83, bd: 0, mat: 5090, ppl: 1100, noOrder: 1550 },
+      { id: "TKC 19", theor: 296.420, shift: 290.833, good: 18189, total: 18347, avail: "73%", perf: "101%", qual: "99%", oee: 73, bd: 135, mat: 6570, ppl: 395, noOrder: 1060 },
+      { id: "TKC 22", theor: 70.140, shift: 185.416, good: 4513, total: 4554, avail: "59%", perf: "37%", qual: "99%", oee: 22, bd: 300, mat: 6615, ppl: 150, noOrder: 1505 },
+      { id: "TKC 15", theor: 230.400, shift: 196.000, good: 24980, total: 25340, avail: "77%", perf: "113%", qual: "99%", oee: 85, bd: 275, mat: 5260, ppl: 785, noOrder: 935 },
+      { id: "TKC 16", theor: 493.780, shift: 393.833, good: 25945, total: 26062, avail: "77%", perf: "125%", qual: "100%", oee: 96, bd: 30, mat: 5840, ppl: 60, noOrder: 1130 },
+      { id: "TKC 24", theor: 124.590, shift: 161.666, good: 13719, total: 13867, avail: "70%", perf: "81%", qual: "99%", oee: 56, bd: 155, mat: 5225, ppl: 665, noOrder: 1440 },
+      { id: "TKC 31", theor: 156.630, shift: 278.666, good: 6022, total: 6035, avail: "71%", perf: "56%", qual: "100%", oee: 40, bd: 615, mat: 4625, ppl: 1139, noOrder: 1035 },
+      { id: "TKC 30", theor: 118.510, shift: 259.166, good: 4205, total: 4218, avail: "71%", perf: "46%", qual: "100%", oee: 32, bd: 435, mat: 4755, ppl: 690, noOrder: 845 },
+      { id: "TKC 28", theor: 163.500, shift: 356.750, good: 8935, total: 8939, avail: "83%", perf: "46%", qual: "100%", oee: 38, bd: 310, mat: 4115, ppl: 20, noOrder: 815 },
+      { id: "TKC 34", theor: 86.590, shift: 179.583, good: 8279, total: 8295, avail: "78%", perf: "54%", qual: "100%", oee: 42, bd: 170, mat: 4310, ppl: 350, noOrder: 1295 },
+      { id: "TKC 32", theor: 143.740, shift: 274.666, good: 5047, total: 5052, avail: "72%", perf: "53%", qual: "100%", oee: 38, bd: 475, mat: 5665, ppl: 430, noOrder: 955 },
+      { id: "TKC 33", theor: 40.170, shift: 61.500, good: 4094, total: 4102, avail: "66%", perf: "55%", qual: "100%", oee: 36, bd: 0, mat: 5720, ppl: 625, noOrder: 1010 },
+      { id: "DZM 02", theor: 85.310, shift: 114.166, good: 3839, total: 3862, avail: "65%", perf: "65%", qual: "75%", oee: 99, bd: 0, mat: 2505, ppl: 515, noOrder: 800 }
+    ];
+
+    // Global Stores for Dashboard Values & Charts
+    const dashboardState = {
+      welding: {
+        good: "2,372,718",
+        hrs: "12,839",
+        lines: "39/43",
+        oee: "71%",
+        avail: "71%",
+        perf: "101%",
+        qual: "100%",
+        pareto: { labels: ["Break Down", "Material Shortage", "No Order", "People Unavailable"], values: [1233, 1162, 580, 223] },
+        pie: { labels: ["Strand Out", "Pull Fail", "Wire Slipping", "Offset", "Safety Door Sensor Issue"], values: [167, 167, 138, 102, 98] },
+        oeeChartData: {
+          labels: ["US 01","US 02","US 03","US 05","US 07","US 08","US 09","US 10","US 11","US 12","US 13","US 14","US 15","US 16","US 17","US 18","US 19","US 20","US 21","US 22","US 23","US 24","US 25","US 26","Automatic 27","US 28","US 29","US 30","US 32","US 34","US 35","US 36","US 37","US 38","US 39","US 40","US 41","US 42","US 43"],
+          values: [50, 51, 51, 78, 70, 52, 75, 63, 65, 70, 74, 67, 86, 56, 65, 78, 57, 95, 93, 89, 76, 82, 77, 78, 23, 87, 77, 55, 49, 41, 37, 32, 78, 78, 43, 32, 78, 78, 43]
+        }
+      },
+      molding: {
+        good: "384,103",
+        hrs: "8,730",
+        lines: "30/34",
+        oee: "77%",
+        avail: "77%",
+        perf: "101%",
+        qual: "99%",
+        pareto: { labels: ["Material Shortage", "No Order", "People Unavailable", "Break Down"], values: [2402, 569, 259, 66] },
+        oeeChartData: {
+          labels: ["TKC 2","TKC 3","TKC 4","TKC 5","TKC 7","TKC 8","TKC 9","TKC 10","TKC 11","TKC 12","TKC 13","TKC 14","YIZUMI","TKC 20","TKC 17","TKC 18","TKC 23","TKC 21","TKC 19","TKC 22","TKC 15","TKC 16","TKC 24","TKC 31","TKC 30","TKC 28","TKC 34","TKC 32","TKC 33","DZM 02"],
+          values: [47, 65, 53, 52, 45, 81, 83, 47, 40, 94, 47, 100, 45, 79, 65, 42, 72, 83, 73, 22, 85, 96, 56, 40, 32, 38, 42, 38, 36, 99]
+        }
+      }
+    };
+
+    let weldingOeeChart, weldingParetoChart, weldingPieChart;
+    let moldingOeeChart, moldingParetoChart;
+
+    // Calculate Cumulative % for Pareto Line Data
+    function getParetoCumulative(values) {
+      const total = values.reduce((acc, val) => acc + val, 0);
+      let cumulativeSum = 0;
+      return values.map(val => {
+        cumulativeSum += val;
+        return parseFloat(((cumulativeSum / total) * 100).toFixed(1));
+      });
+    }
+
+    // Populate Data Tables
+    function renderTables() {
+      // Welding Table
+      const wTbody = document.querySelector('#weldingTable tbody');
+      const wTfoot = document.querySelector('#weldingTable tfoot');
+      wTbody.innerHTML = '';
+      
+      rawWeldingTable.forEach(row => {
+        const oeeClass = row.oee > 70 ? 'oee-high' : row.oee >= 50 ? 'oee-mid' : 'oee-low';
+        wTbody.innerHTML += `
+          <tr>
+            <td><strong>${row.id}</strong></td>
+            <td>${row.theor.toFixed(2)}</td>
+            <td>${row.shift.toFixed(2)}</td>
+            <td>${row.good.toLocaleString()}</td>
+            <td>${row.total.toLocaleString()}</td>
+            <td>${row.avail}</td>
+            <td>${row.perf}</td>
+            <td>${row.qual}</td>
+            <td><span class="oee-badge ${oeeClass}">${row.oee}%</span></td>
+            <td>${row.bd.toFixed(2)}</td>
+            <td>${row.mat.toFixed(2)}</td>
+            <td>${row.ppl.toFixed(2)}</td>
+            <td>${row.noOrder.toFixed(2)}</td>
+          </tr>
+        `;
+      });
+
+      wTfoot.innerHTML = `
+        <tr>
+          <td>Total / Avg</td>
+          <td>9,507.72</td>
+          <td>12,839.30</td>
+          <td>2,351,277</td>
+          <td>2,372,718</td>
+          <td>62%</td>
+          <td>123.20%</td>
+          <td>99%</td>
+          <td><span class="oee-badge oee-high">75.47%</span></td>
+          <td>1,233.92</td>
+          <td>1,168.71</td>
+          <td>223.99</td>
+          <td>580.00</td>
+        </tr>
+      `;
+
+      // Molding Table
+      const mTbody = document.querySelector('#moldingTable tbody');
+      const mTfoot = document.querySelector('#moldingTable tfoot');
+      mTbody.innerHTML = '';
+
+      rawMoldingTable.forEach(row => {
+        const oeeClass = row.oee > 70 ? 'oee-high' : row.oee >= 50 ? 'oee-mid' : 'oee-low';
+        mTbody.innerHTML += `
+          <tr>
+            <td><strong>${row.id}</strong></td>
+            <td>${row.theor.toFixed(2)}</td>
+            <td>${row.shift.toFixed(2)}</td>
+            <td>${row.good.toLocaleString()}</td>
+            <td>${row.total.toLocaleString()}</td>
+            <td>${row.avail}</td>
+            <td>${row.perf}</td>
+            <td>${row.qual}</td>
+            <td><span class="oee-badge ${oeeClass}">${row.oee}%</span></td>
+            <td>${row.bd}</td>
+            <td>${row.mat}</td>
+            <td>${row.ppl}</td>
+            <td>${row.noOrder}</td>
+          </tr>
+        `;
+      });
+
+      mTfoot.innerHTML = `
+        <tr>
+          <td>Total / Avg</td>
+          <td>6,237.28</td>
+          <td>7,384.18</td>
+          <td>384,103</td>
+          <td>388,951</td>
+          <td>46%</td>
+          <td>175.40%</td>
+          <td>99%</td>
+          <td><span class="oee-badge oee-high">80.00%</span></td>
+          <td>66</td>
+          <td>2,427.75</td>
+          <td>258.32</td>
+          <td>568.25</td>
+        </tr>
+      `;
+    }
+
+    // Initialize Chart.js Elements
+    function initCharts() {
+      const textColor = getThemeTextColor();
+      const gridColor = getThemeGridColor();
+
+      // 1. WELDING OEE BAR CHART
+      const ctxWOee = document.getElementById('weldingOeeChart').getContext('2d');
+      weldingOeeChart = new Chart(ctxWOee, {
+        type: 'bar',
+        data: {
+          labels: dashboardState.welding.oeeChartData.labels,
+          datasets: [{
+            label: 'OEE %',
+            data: dashboardState.welding.oeeChartData.values,
+            backgroundColor: dashboardState.welding.oeeChartData.values.map(getOeeBarColor),
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            datalabels: {
+              anchor: 'end',
+              align: 'top',
+              color: textColor,
+              font: { weight: 'bold', size: 9 },
+              formatter: (v) => v + '%'
+            }
+          },
+          scales: {
+            x: { ticks: { color: textColor, font: { size: 10 } }, grid: { display: false } },
+            y: { max: 110, ticks: { color: textColor, callback: (v) => v + '%' }, grid: { color: gridColor } }
+          }
+        }
+      });
+
+      // 2. WELDING PARETO CHART
+      const ctxWPareto = document.getElementById('weldingParetoChart').getContext('2d');
+      const wParetoCum = getParetoCumulative(dashboardState.welding.pareto.values);
+      weldingParetoChart = new Chart(ctxWPareto, {
+        type: 'bar',
+        data: {
+          labels: dashboardState.welding.pareto.labels,
+          datasets: [
+            {
+              type: 'bar',
+              label: 'Loss (Hours)',
+              data: dashboardState.welding.pareto.values,
+              backgroundColor: '#3b82f6',
+              borderRadius: 6,
+              yAxisID: 'y'
+            },
+            {
+              type: 'line',
+              label: 'Cumulative %',
+              data: wParetoCum,
+              borderColor: '#ef4444',
+              backgroundColor: '#ef4444',
+              borderWidth: 2,
+              yAxisID: 'y1',
+              datalabels: {
+                align: 'top',
+                formatter: (v) => v + '%'
+              }
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: textColor } },
+            datalabels: {
+              color: textColor,
+              font: { weight: 'bold', size: 11 },
+              formatter: (v) => v
+            }
+          },
+          scales: {
+            x: { ticks: { color: textColor }, grid: { display: false } },
+            y: { ticks: { color: textColor }, grid: { color: gridColor }, title: { display: true, text: 'Hours', color: textColor } },
+            y1: { max: 110, position: 'right', ticks: { color: textColor, callback: (v) => v + '%' }, grid: { display: false } }
+          }
+        }
+      });
+
+      // 3. WELDING BREAKDOWN PIE CHART
+      const ctxWPie = document.getElementById('weldingPieChart').getContext('2d');
+      weldingPieChart = new Chart(ctxWPie, {
+        type: 'pie',
+        data: {
+          labels: dashboardState.welding.pie.labels,
+          datasets: [{
+            data: dashboardState.welding.pie.values,
+            backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6']
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { color: textColor, font: { size: 11 } } },
+            datalabels: {
+              color: '#ffffff',
+              font: { weight: 'bold', size: 11 },
+              formatter: (v, ctx) => {
+                let sum = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                let percentage = (v * 100 / sum).toFixed(1) + "%";
+                return v + "h\n(" + percentage + ")";
+              }
+            }
+          }
+        }
+      });
+
+      // 4. MOLDING OEE BAR CHART
+      const ctxMOee = document.getElementById('moldingOeeChart').getContext('2d');
+      moldingOeeChart = new Chart(ctxMOee, {
+        type: 'bar',
+        data: {
+          labels: dashboardState.molding.oeeChartData.labels,
+          datasets: [{
+            label: 'OEE %',
+            data: dashboardState.molding.oeeChartData.values,
+            backgroundColor: dashboardState.molding.oeeChartData.values.map(getOeeBarColor),
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            datalabels: {
+              anchor: 'end',
+              align: 'top',
+              color: textColor,
+              font: { weight: 'bold', size: 9 },
+              formatter: (v) => v + '%'
+            }
+          },
+          scales: {
+            x: { ticks: { color: textColor, font: { size: 10 } }, grid: { display: false } },
+            y: { max: 110, ticks: { color: textColor, callback: (v) => v + '%' }, grid: { color: gridColor } }
+          }
+        }
+      });
+
+      // 5. MOLDING PARETO CHART (ENLARGED)
+      const ctxMPareto = document.getElementById('moldingParetoChart').getContext('2d');
+      const mParetoCum = getParetoCumulative(dashboardState.molding.pareto.values);
+      moldingParetoChart = new Chart(ctxMPareto, {
+        type: 'bar',
+        data: {
+          labels: dashboardState.molding.pareto.labels,
+          datasets: [
+            {
+              type: 'bar',
+              label: 'Loss (Hours)',
+              data: dashboardState.molding.pareto.values,
+              backgroundColor: '#2563eb',
+              borderRadius: 6,
+              yAxisID: 'y'
+            },
+            {
+              type: 'line',
+              label: 'Cumulative %',
+              data: mParetoCum,
+              borderColor: '#ef4444',
+              backgroundColor: '#ef4444',
+              borderWidth: 2,
+              yAxisID: 'y1',
+              datalabels: {
+                align: 'top',
+                formatter: (v) => v + '%'
+              }
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: textColor } },
+            datalabels: {
+              color: textColor,
+              font: { weight: 'bold', size: 11 },
+              formatter: (v) => v
+            }
+          },
+          scales: {
+            x: { ticks: { color: textColor }, grid: { display: false } },
+            y: { ticks: { color: textColor }, grid: { color: gridColor }, title: { display: true, text: 'Hours', color: textColor } },
+            y1: { max: 110, position: 'right', ticks: { color: textColor, callback: (v) => v + '%' }, grid: { display: false } }
+          }
+        }
+      });
+
+    }
+
+    // Switch View Panel (Welding / Molding)
+    function switchView(mode) {
+      document.getElementById('btn-welding').classList.toggle('active', mode === 'welding');
+      document.getElementById('btn-molding').classList.toggle('active', mode === 'molding');
+
+      document.getElementById('welding-panel').classList.toggle('active', mode === 'welding');
+      document.getElementById('molding-panel').classList.toggle('active', mode === 'molding');
+
+      // Update KPI Cards
+      const data = dashboardState[mode];
+      document.getElementById('kpi-good').innerText = data.good;
+      document.getElementById('kpi-hrs').innerText = data.hrs;
+      document.getElementById('kpi-lines').innerText = data.lines;
+      document.getElementById('kpi-avail').innerText = data.avail;
+      document.getElementById('kpi-perf').innerText = data.perf;
+      document.getElementById('kpi-qual').innerText = data.qual;
+      document.getElementById('kpi-oee').innerText = data.oee;
+    }
+
+    // Toggle Light/Dark Mode Dynamically
+    function toggleTheme() {
+      const isDark = isDarkMode();
+      const newTheme = isDark ? 'light' : 'dark';
+      document.body.setAttribute('data-theme', newTheme);
+
+      // Update Theme Switcher Button Icon & Text
+      const iconSpan = document.getElementById('theme-icon');
+      const textSpan = document.getElementById('theme-text');
+      if (newTheme === 'dark') {
+        iconSpan.setAttribute('data-lucide', 'sun');
+        textSpan.innerText = 'Light Mode';
+      } else {
+        iconSpan.setAttribute('data-lucide', 'moon');
+        textSpan.innerText = 'Dark Mode';
+      }
+      lucide.createIcons();
+
+      // Re-apply Colors across active Chart.js instances
+      const textColor = getThemeTextColor();
+      const gridColor = getThemeGridColor();
+
+      const allCharts = [weldingOeeChart, weldingParetoChart, weldingPieChart, moldingOeeChart, moldingParetoChart];
+      allCharts.forEach(chart => {
+        if (!chart) return;
+        if (chart.options.scales) {
+          if (chart.options.scales.x) chart.options.scales.x.ticks.color = textColor;
+          if (chart.options.scales.y) {
+            chart.options.scales.y.ticks.color = textColor;
+            if (chart.options.scales.y.grid) chart.options.scales.y.grid.color = gridColor;
+            if (chart.options.scales.y.title) chart.options.scales.y.title.color = textColor;
+          }
+          if (chart.options.scales.y1) chart.options.scales.y1.ticks.color = textColor;
+        }
+        if (chart.options.plugins && chart.options.plugins.legend) {
+          chart.options.plugins.legend.labels.color = textColor;
+        }
+        if (chart.options.plugins && chart.options.plugins.datalabels && chart.config.type !== 'pie') {
+          chart.options.plugins.datalabels.color = textColor;
+        }
+        chart.update();
+      });
+    }
+
+    // Initialize Application
+    window.onload = () => {
+      lucide.createIcons();
+      renderTables();
+      initCharts();
+      switchView('welding'); // Default View
+    };
+  </script>
+</body>
+</html>
